@@ -1,0 +1,198 @@
+<!-- BEGIN: Top HTML -->
+<!DOCTYPE html>
+<!-- include aframe -->
+<script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
+<!-- include ar.js -->
+<script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.7.2/aframe/build/aframe-ar.js"></script>
+
+<!-- to load .ply model -->
+<script src="https://rawgit.com/donmccurdy/aframe-extras/v6.0.0/dist/aframe-extras.loaders.min.js"></script>
+
+<!-- END: Top HTML -->
+<!-- BEGIN: Unity Compiled Events -->
+<script>
+var markerFound = 0;
+AFRAME.registerComponent('button', {
+init: function () {
+var elem = document.documentElement;
+var marker = document.querySelector("#marker");
+var fullbutton = document.querySelector("#fullscreen");
+marker.addEventListener("markerFound", function (evt) {
+markerFound = 1;
+});
+marker.addEventListener("markerLost", function (evt) {
+markerFound = 0;
+});
+fullbutton.addEventListener("click", function (evt) {
+                if (fullscreen == 0) {
+                    if (elem.requestFullscreen) {
+                        elem.requestFullscreen();
+                    } else if (elem.mozRequestFullScreen) {
+                        /* Firefox */
+                        elem.mozRequestFullScreen();
+                    } else if (elem.webkitRequestFullscreen) {
+                        /* Chrome, Safari and Opera */
+                        elem.webkitRequestFullscreen();
+                    } else if (elem.msRequestFullscreen) {
+                        /* IE/Edge */
+                        elem.msRequestFullscreen();
+                    }
+                    fullbutton.setAttribute("src", "../exit_fullscreen.png");
+                    fullscreen = 1;
+                } else {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    } else if (document.webkitExitFullscreen) {
+                        document.webkitExitFullscreen();
+                    } else if (document.mozCancelFullScreen) {
+                        document.mozCancelFullScreen();
+                    } else if (document.msExitFullscreen) {
+                        document.msExitFullscreen();
+                    }
+                    fullbutton.setAttribute("src", "../fullscreen.png");
+                    fullscreen = 0;
+                }
+
+            });
+},
+tick: function (totalTime, deltaTime) {
+var dTime = deltaTime / 1000;
+
+if (markerFound == 1) {
+}
+
+function bezierEvaluate(p0, p1, p2, p3, t) {
+                var u = (1 - t);
+                var uu = u * u;
+                var uuu = u * u * u;
+                var tt = t * t;
+                var ttt = t * t * t;
+                //B(t) = (1-t)^3*P0 + 3*(1-t)^2*t*P1 + 3*(1-t)*t^2*P2 + t^3*P3 , 0 < t < 1
+                return (uuu * p0 + 3 * uu * t * p1 + 3 * u * tt * p2 + ttt * p3);
+
+            }
+           function bezierPath(p0, p1, p2, p3, t) {
+                return new THREE.Vector3(
+                    bezierEvaluate(p0.x, p1.x, p2.x, p3.x, t),
+                    bezierEvaluate(p0.y, p1.y, p2.y, p3.y, t),
+                    bezierEvaluate(p0.z, p1.z, p2.z, p3.z, t)
+                );
+            }
+
+        }
+});
+</script>
+<!-- END: Unity Compiled Events -->
+
+<!-- BEGIN: Middle HTML -->
+<body style='margin : 0px; overflow: hidden; font-family: Monospace;'>
+<div style='position: absolute; bottom: 5px; left: 30px; width:100%; text-align: right; z-index: 1;'>
+        <input type="image" id="fullscreen" src="../fullscreen.png" style='position: absolute; bottom: 0px; right: 35px;'>
+        </input>
+    </div>
+<!-- <a-scene embedded arjs='debugUIEnabled: false; sourceType: video; sourceUrl:../../data/videos/headtracking.mp4;'> -->
+    <a-scene embedded arjs='debugUIEnabled: false; sourceType: webcam' vr-mode-ui='enabled: false'>
+    <a-entity id="mouseCursor" cursor="rayOrigin: mouse" raycaster="objects: .intersectable; useWorldCoordinates: true;"></a-entity>
+<!-- END: Middle HTML -->
+
+<!-- BEGIN: Unity Compiled Assets -->
+<a-assets>
+<a-asset-item id="drehmas_Asset_obj_0" src="models/drehmas.obj"></a-asset-item>
+<a-asset-item id="drehmas_Asset_mtl_0" src="models/drehmas.mtl"></a-asset-item>
+<a-asset-item id="Backe_Asset_obj_1" src="models/Backe.obj"></a-asset-item>
+<a-asset-item id="Backe_Asset_mtl_1" src="models/Backe.mtl"></a-asset-item>
+<a-asset-item id="Hebeloben-7_Asset_obj_2" src="models/Hebeloben-7.obj"></a-asset-item>
+<a-asset-item id="Hebeloben-7_Asset_mtl_2" src="models/Hebeloben-7.mtl"></a-asset-item>
+<a-asset-item id="Hebeloben-1_Asset_obj_3" src="models/Hebeloben-1.obj"></a-asset-item>
+<a-asset-item id="Hebeloben-1_Asset_mtl_3" src="models/Hebeloben-1.mtl"></a-asset-item>
+<a-asset-item id="Hebeloben-2_Asset_obj_4" src="models/Hebeloben-2.obj"></a-asset-item>
+<a-asset-item id="Hebeloben-2_Asset_mtl_4" src="models/Hebeloben-2.mtl"></a-asset-item>
+<a-asset-item id="HebelC-1_Asset_obj_5" src="models/HebelC-1.obj"></a-asset-item>
+<a-asset-item id="HebelC-1_Asset_mtl_5" src="models/HebelC-1.mtl"></a-asset-item>
+<a-asset-item id="HebelD-1_Asset_obj_6" src="models/HebelD-1.obj"></a-asset-item>
+<a-asset-item id="HebelD-1_Asset_mtl_6" src="models/HebelD-1.mtl"></a-asset-item>
+<a-asset-item id="Hebeloben-5_Asset_obj_7" src="models/Hebeloben-5.obj"></a-asset-item>
+<a-asset-item id="Hebeloben-5_Asset_mtl_7" src="models/Hebeloben-5.mtl"></a-asset-item>
+<a-asset-item id="Hebeloben-6_Asset_obj_8" src="models/Hebeloben-6.obj"></a-asset-item>
+<a-asset-item id="Hebeloben-6_Asset_mtl_8" src="models/Hebeloben-6.mtl"></a-asset-item>
+<a-asset-item id="Hebel7-1_Asset_obj_9" src="models/Hebel7-1.obj"></a-asset-item>
+<a-asset-item id="Hebel7-1_Asset_mtl_9" src="models/Hebel7-1.mtl"></a-asset-item>
+<a-asset-item id="Hebel8-1_Asset_obj_10" src="models/Hebel8-1.obj"></a-asset-item>
+<a-asset-item id="Hebel8-1_Asset_mtl_10" src="models/Hebel8-1.mtl"></a-asset-item>
+</a-assets>
+<!-- END: Unity Compiled Assets -->
+<!-- BEGIN: Add Image Target (marker) -->
+<a-marker id="marker" preset="hiro" emitevents="true" button>
+<!-- END: Add Image Target (marker) -->
+
+<!-- BEGIN: Unity Compiled Objects -->
+<a-entity obj-model="obj: #drehmas_Asset_obj_0; mtl: #drehmas_Asset_mtl_0" id="drehmas_0" class="intersectable" scale="5 5 5" position="0 0 0" rotation="0 0 0" color="#ffffff" transparent=False
+></a-entity>
+<a-entity obj-model="obj: #Backe_Asset_obj_1; mtl: #Backe_Asset_mtl_1" id="Backe_1" class="intersectable" scale="5 5 5" position="0.2679 0.593 0" rotation="0 0 0" color="#ffffff" transparent=False
+animation__backe_1_f0=" property: position;  to: 0.2679 0.593 0; dur: 0; easing: linear; startEvents: mousedown;"
+animation__backe_1_f0=" property: rotation;  to: 0 0 0; dur: 0; easing: linear; startEvents: mousedown;"
+animation__backe_1_f0=" property: scale;  to: 5 5 5; dur: 0; easing: linear; startEvents: mousedown;"
+animation__backe_1_f1=" property: rotation; from: 0 0 0; to: 360 0 0; dur: 2000; easing: linear; startEvents: animationcomplete__backe_1_f0, animationcomplete__backe_1_f1;"
+></a-entity>
+<a-entity obj-model="obj: #Hebeloben-7_Asset_obj_2; mtl: #Hebeloben-7_Asset_mtl_2" id="Hebeloben-7_2" class="intersectable" scale="5 5 5" position="0.3814 0.68909 0.0395" rotation="0 0 0" color="#ffffff" transparent=False
+animation__hebeloben-7_2_f0=" property: position;  to: 0.3814 0.68909 0.0395; dur: 0; easing: linear; startEvents: mousedown;"
+animation__hebeloben-7_2_f0=" property: rotation;  to: 0 0 0; dur: 0; easing: linear; startEvents: mousedown;"
+animation__hebeloben-7_2_f0=" property: scale;  to: 5 5 5; dur: 0; easing: linear; startEvents: mousedown;"
+animation__hebeloben-7_2_f1=" property: rotation; from: 0 0 0; to: 0 -60 0; dur: 5000; easing: linear; startEvents: animationcomplete__hebeloben-7_2_f0;"
+></a-entity>
+<a-entity obj-model="obj: #Hebeloben-1_Asset_obj_3; mtl: #Hebeloben-1_Asset_mtl_3" id="Hebeloben-1_3" class="intersectable" scale="5 5 5" position="0.342 0.601 -0.1356" rotation="0 0 0" color="#ffffff" transparent=False
+animation__hebeloben-1_3_f0=" property: position;  to: 0.342 0.601 -0.1356; dur: 0; easing: linear; startEvents: mousedown;"
+animation__hebeloben-1_3_f0=" property: rotation;  to: 0 0 0; dur: 0; easing: linear; startEvents: mousedown;"
+animation__hebeloben-1_3_f0=" property: scale;  to: 5 5 5; dur: 0; easing: linear; startEvents: mousedown;"
+animation__hebeloben-1_3_f1=" property: rotation; from: 0 0 0; to: 0 0 30; dur: 5000; easing: linear; startEvents: animationcomplete__hebeloben-1_3_f0;"
+></a-entity>
+<a-entity obj-model="obj: #Hebeloben-2_Asset_obj_4; mtl: #Hebeloben-2_Asset_mtl_4" id="Hebeloben-2_4" class="intersectable" scale="5 5 5" position="0.404 0.556 -0.134" rotation="0 0 0" color="#ffffff" transparent=False
+animation__hebeloben-2_4_f0=" property: position;  to: 0.404 0.556 -0.134; dur: 0; easing: linear; startEvents: mousedown;"
+animation__hebeloben-2_4_f0=" property: rotation;  to: 0 0 0; dur: 0; easing: linear; startEvents: mousedown;"
+animation__hebeloben-2_4_f0=" property: scale;  to: 5 5 5; dur: 0; easing: linear; startEvents: mousedown;"
+animation__hebeloben-2_4_f1=" property: rotation; from: 0 0 0; to: 0 0 30; dur: 5000; easing: linear; startEvents: animationcomplete__hebeloben-2_4_f0;"
+></a-entity>
+<a-entity obj-model="obj: #HebelC-1_Asset_obj_5; mtl: #HebelC-1_Asset_mtl_5" id="HebelC-1_5" class="intersectable" scale="5 5 5" position="0.459 0.559 -0.1356" rotation="0 0 0" color="#ffffff" transparent=False
+animation__hebelc-1_5_f0=" property: position;  to: 0.459 0.559 -0.1356; dur: 0; easing: linear; startEvents: mousedown;"
+animation__hebelc-1_5_f0=" property: rotation;  to: 0 0 0; dur: 0; easing: linear; startEvents: mousedown;"
+animation__hebelc-1_5_f0=" property: scale;  to: 5 5 5; dur: 0; easing: linear; startEvents: mousedown;"
+animation__hebelc-1_5_f1=" property: rotation; from: 0 0 0; to: 0 0 -30; dur: 5000; easing: linear; startEvents: animationcomplete__hebelc-1_5_f0;"
+></a-entity>
+<a-entity obj-model="obj: #HebelD-1_Asset_obj_6; mtl: #HebelD-1_Asset_mtl_6" id="HebelD-1_6" class="intersectable" scale="5 5 5" position="0.4739 0.5339 -0.135" rotation="0 0 0" color="#ffffff" transparent=False
+animation__hebeld-1_6_f0=" property: position;  to: 0.4739 0.5339 -0.135; dur: 0; easing: linear; startEvents: mousedown;"
+animation__hebeld-1_6_f0=" property: rotation;  to: 0 0 0; dur: 0; easing: linear; startEvents: mousedown;"
+animation__hebeld-1_6_f0=" property: scale;  to: 5 5 5; dur: 0; easing: linear; startEvents: mousedown;"
+animation__hebeld-1_6_f1=" property: rotation; from: 0 0 0; to: 0 0 -30; dur: 5000; easing: linear; startEvents: animationcomplete__hebeld-1_6_f0;"
+></a-entity>
+<a-entity obj-model="obj: #Hebeloben-5_Asset_obj_7; mtl: #Hebeloben-5_Asset_mtl_7" id="Hebeloben-5_7" class="intersectable" scale="5 5 5" position="0.432 0.42 -0.135" rotation="0 0 0" color="#ffffff" transparent=False
+animation__hebeloben-5_7_f0=" property: position;  to: 0.432 0.42 -0.135; dur: 0; easing: linear; startEvents: mousedown;"
+animation__hebeloben-5_7_f0=" property: rotation;  to: 0 0 0; dur: 0; easing: linear; startEvents: mousedown;"
+animation__hebeloben-5_7_f0=" property: scale;  to: 5 5 5; dur: 0; easing: linear; startEvents: mousedown;"
+animation__hebeloben-5_7_f1=" property: rotation; from: 0 0 0; to: 0 0 30; dur: 5000; easing: linear; startEvents: animationcomplete__hebeloben-5_7_f0;"
+></a-entity>
+<a-entity obj-model="obj: #Hebeloben-6_Asset_obj_8; mtl: #Hebeloben-6_Asset_mtl_8" id="Hebeloben-6_8" class="intersectable" scale="5 5 5" position="0.3441 0.416 -0.134" rotation="0 0 0" color="#ffffff" transparent=False
+animation__hebeloben-6_8_f0=" property: position;  to: 0.3441 0.416 -0.134; dur: 0; easing: linear; startEvents: mousedown;"
+animation__hebeloben-6_8_f0=" property: rotation;  to: 0 0 0; dur: 0; easing: linear; startEvents: mousedown;"
+animation__hebeloben-6_8_f0=" property: scale;  to: 5 5 5; dur: 0; easing: linear; startEvents: mousedown;"
+animation__hebeloben-6_8_f1=" property: rotation; from: 0 0 0; to: 0 0 30; dur: 5000; easing: linear; startEvents: animationcomplete__hebeloben-6_8_f0;"
+></a-entity>
+<a-entity obj-model="obj: #Hebel7-1_Asset_obj_9; mtl: #Hebel7-1_Asset_mtl_9" id="Hebel7-1_9" class="intersectable" scale="5 5 5" position="0.2956 0.4301 -0.1348" rotation="0 0 0" color="#ffffff" transparent=False
+animation__hebel7-1_9_f0=" property: position;  to: 0.2956 0.4301 -0.1348; dur: 0; easing: linear; startEvents: mousedown;"
+animation__hebel7-1_9_f0=" property: rotation;  to: 0 0 0; dur: 0; easing: linear; startEvents: mousedown;"
+animation__hebel7-1_9_f0=" property: scale;  to: 5 5 5; dur: 0; easing: linear; startEvents: mousedown;"
+animation__hebel7-1_9_f1=" property: rotation; from: 0 0 0; to: 0 0 -90; dur: 3000; easing: linear; startEvents: animationcomplete__hebel7-1_9_f0;"
+></a-entity>
+<a-entity obj-model="obj: #Hebel8-1_Asset_obj_10; mtl: #Hebel8-1_Asset_mtl_10" id="Hebel8-1_10" class="intersectable" scale="5 5 5" position="0.3599 0.3425 -0.1359" rotation="0 0 0" color="#ffffff" transparent=False
+animation__hebel8-1_10_f0=" property: position;  to: 0.3599 0.3425 -0.1359; dur: 0; easing: linear; startEvents: mousedown;"
+animation__hebel8-1_10_f0=" property: rotation;  to: 0 0 0; dur: 0; easing: linear; startEvents: mousedown;"
+animation__hebel8-1_10_f0=" property: scale;  to: 5 5 5; dur: 0; easing: linear; startEvents: mousedown;"
+animation__hebel8-1_10_f1=" property: rotation; from: 0 0 0; to: 0 0 -90; dur: 4000; easing: linear; startEvents: animationcomplete__hebel8-1_10_f0;"
+></a-entity>
+<!-- END: Unity Compiled Objects -->
+
+<!-- BEGIN: Bottom HTML -->
+</a-marker>
+        <a-entity camera></a-entity>
+        </a-scene>
+</body>
+</html><!-- END: Bottom HTML -->
